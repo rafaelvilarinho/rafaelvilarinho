@@ -31,8 +31,11 @@
   - 📄 Know about my experiences [https://www.linkedin.com/in/rafaelraiol/](https://www.linkedin.com/in/rafaelraiol/)
 
 </div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
   
-<h3 align="left">Languages and Tools:</h3>
+<h3 align="center">Languages and Tools:</h3>
+<p align="center">
 <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
   <img
     src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg"
@@ -129,6 +132,7 @@
     height="40"
   />
 </a>
+</p>
 
 <br/><br/>
 
