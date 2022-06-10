@@ -4,6 +4,10 @@
   Senior Full Stack Software Engineer using MERN Stack and Golang.
 </h3>
 
+<a href="https://app.daily.dev/DailyDevTips">
+  <img align="right" src="https://github.com/rafaelvilarinho/rafaelvilarinho/blob/master/devcard.svg" width="400" alt="Rafael Vilarinho's Dev Card"/>
+</a>
+
 <p align="left">
   <img
     src="https://komarev.com/ghpvc/?username=rafaelvilarinho&label=Profile%20views&color=0e75b6&style=flat"
@@ -191,14 +195,14 @@
 <p>
   <a href="https://www.buymeacoffee.com/rafaelvilarinho">
     <img
-      align="left"
       src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
       height="50"
       width="210"
       alt="rafaelvilarinho"
   /></a>
 </p>
-<br /><br />
+
+<br />
 
 <p>
   <img
@@ -206,10 +210,8 @@
     src="https://github-readme-stats.vercel.app/api/top-langs?username=rafaelvilarinho&show_icons=true&locale=en&layout=compact"
     alt="rafaelvilarinho"
   />
-</p>
-
-<p>
-  &nbsp;<img
+  
+  <img
     align="center"
     src="https://github-readme-stats.vercel.app/api?username=rafaelvilarinho&show_icons=true&locale=en"
     alt="rafaelvilarinho"
