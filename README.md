@@ -1,5 +1,5 @@
 <div align="left">
-  <a href="https://app.daily.dev/DailyDevTips">
+  <a href="https://app.daily.dev/rafaelvilarinho">
     <img align="left" src="https://github.com/rafaelvilarinho/rafaelvilarinho/blob/main/devcard.svg" width="400" alt="Rafael Vilarinho's Dev Card"/>
   </a>
 
