@@ -18,9 +18,9 @@
     Senior Full Stack Software Engineer using MERN Stack and Golang.
   </h3>
 
-  <a href="https://twitter.com/rafavilar" target="blank"><img
-      src="https://img.shields.io/twitter/follow/ravitecnologia?logo=twitter&style=for-the-badge"
-      alt="ravitecnologia" /></a>
+  <a href="https://twitter.com/bepizu" target="blank"><img
+      src="https://img.shields.io/twitter/follow/bepizu?logo=twitter&style=for-the-badge"
+      alt="bepizu" /></a>
   </p>
   
   - 🔭 I’m currently working at [FinanZero](https://www.finanzero.com.br/) 
