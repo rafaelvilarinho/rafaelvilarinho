@@ -141,7 +141,7 @@
 <a href="https://twitter.com/ravitecnologia" target="blank"><img
     align="center"
     src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg"
-    alt="ravitecnologia"
+    alt="bepizu"
     height="30"
     width="40"
 /></a>
