@@ -14,15 +14,15 @@
   </h1>
 
   <h3 align="left">
-    As a senior devops engineer at ADTsys Data Cloud, I support development and security teams in defining, developing, and implementing scalable, secure, and stable infrastructure solutions for new and existing services. With experience in software engineering and devops, I have acquired strong skills in cloud computing, docker, terraform, scripting, and CI/CD.
+    As a senior cloud specialist at Ambev Tech, I support development and security teams in defining, developing, and implementing scalable, secure, and stable infrastructure solutions for new and existing services. With experience in software engineering and devops, I have acquired strong skills in cloud computing, docker, terraform, scripting, and CI/CD.
   </h3>
 
-  <a href="https://twitter.com/bepizu" target="blank"><img
+  <a href="https://bsky.app/bepizu.com..br" target="blank"><img
       src="https://img.shields.io/twitter/follow/bepizu?logo=twitter&style=for-the-badge"
       alt="bepizu" /></a>
   </p>
   
-  - 🔭 I’m currently working at [ADTsys Data Cloud](https://www.adtsys.com.br/) 
+  - 🔭 I’m currently working at [Ambev Tech](https://ambevtech.com.br/) 
   - 🌱 I’m currently learning **Azure DevOps**
   - 👨‍💻 All of my projects are available at [https://github.com/rafaelvilarinho](https://github.com/rafaelvilarinho)
   - 💬 Ask me about **API Rest, CI automations and infrastructure**
