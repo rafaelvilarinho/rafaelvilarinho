@@ -14,7 +14,7 @@
   </h1>
 
   <h3 align="left">
-    As a senior cloud specialist at Ambev Tech, I support development and security teams in defining, developing, and implementing scalable, secure, and stable infrastructure solutions for new and existing services. With experience in software engineering and devops, I have acquired strong skills in cloud computing, docker, terraform, scripting, and CI/CD.
+    As a Software Developer at Ambev Tech, I work with developer experience, delivering tools to improve and automate the Cloud tasks.
   </h3>
 
   <a href="https://bsky.app/bepizu.com..br" target="blank"><img
@@ -23,9 +23,8 @@
   </p>
   
   - 🔭 I’m currently working at [Ambev Tech](https://ambevtech.com.br/) 
-  - 🌱 I’m currently learning **Azure DevOps**
   - 👨‍💻 All of my projects are available at [https://github.com/rafaelvilarinho](https://github.com/rafaelvilarinho)
-  - 💬 Ask me about **API Rest, CI automations and infrastructure**
+  - 💬 Ask me about **API applications, Software Development and Infrastructure**
   - 📫 How to reach me **rafael.raiol@gmail.com**
   - 📄 Know about my experiences [https://www.linkedin.com/in/rafaelraiol/](https://www.linkedin.com/in/rafaelraiol/)
 
