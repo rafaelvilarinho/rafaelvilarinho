@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rafael Vilarinho Raiol — Senior Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-2: #0f1424;
+    --ink: #e2e8f0;
+    --ink-mute: #94a3b8;
+    --ink-faint: #475569;
+    --line: #1e293b;
+    --line-soft: #131a2c;
+    --sakura: #ff8db4;
+    --sakura-deep: #f472a6;
+    --circuit: #7dd3fc;
+    --circuit-deep: #38bdf8;
+    --gold: #fbbf24;
+    --serif: "Shippori Mincho", "Times New Roman", serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--sakura); color: var(--bg); }
+
+  /* ——— layered background: subtle vignette + circuit grid ——— */
+  .bg-vignette {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(125,211,252,0.04), transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(255,141,180,0.04), transparent 55%);
+  }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35;
+    background-image:
+      linear-gradient(to right, rgba(125,211,252,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(125,211,252,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  /* Sakura petal canvas + circuit canvas float above bg, below content */
+  #sakura-canvas, #circuit-canvas {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
+  }
+  #circuit-canvas { opacity: 0.55; }
+  main { position: relative; z-index: 2; }
+
+  /* ——— shared layout ——— */
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 48px; }
+  @media (max-width: 720px) { .wrap { padding: 0 24px; } }
+
+  /* ——— top nav ——— */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(to bottom, rgba(10,14,26,0.85), rgba(10,14,26,0.4));
+    border-bottom: 1px solid rgba(30,41,59,0.5);
+  }
+  nav.top .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .mark {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--serif); font-size: 18px; letter-spacing: 0.02em;
+    text-decoration: none; color: var(--ink);
+  }
+  .mark .kanji {
+    font-size: 22px; color: var(--sakura);
+    font-feature-settings: "palt";
+    line-height: 1;
+  }
+  .mark .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--circuit); }
+  nav.top ul {
+    list-style: none; display: flex; gap: 32px; margin: 0; padding: 0;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  nav.top ul a {
+    color: var(--ink-mute); text-decoration: none; transition: color .2s;
+    position: relative;
+  }
+  nav.top ul a:hover { color: var(--sakura); }
+  nav.top ul a .num { color: var(--ink-faint); margin-right: 6px; }
+  .theme-toggle {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-mute);
+    text-decoration: none; padding: 8px 14px;
+    border: 1px solid var(--line); border-radius: 999px;
+    transition: all .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .theme-toggle:hover { border-color: var(--sakura); color: var(--ink); }
+  .theme-toggle .moon { color: var(--sakura); }
+
+  @media (max-width: 720px) {
+    nav.top ul { display: none; }
+  }
+
+  /* ——— hero ——— */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    padding-top: 64px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    width: 100%;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  .kaizen-watermark {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(180px, 28vw, 360px);
+    line-height: 0.85;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,141,180,0.18);
+    user-select: none;
+    position: relative;
+    text-align: center;
+    letter-spacing: -0.04em;
+  }
+  .kaizen-watermark::after {
+    content: "";
+    position: absolute; inset: 50% auto auto 50%;
+    width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sakura), transparent);
+    transform: translate(-50%, 0);
+  }
+  .kaizen-stamp {
+    position: absolute; bottom: 10%; right: 10%;
+    width: 56px; height: 56px;
+    border: 1px solid var(--sakura);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 14px; color: var(--sakura);
+    transform: rotate(-4deg);
+    background: rgba(10,14,26,0.5);
+  }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--circuit);
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: ""; width: 32px; height: 1px; background: var(--circuit);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 28px;
+  }
+  .hero h1 .accent { color: var(--sakura); font-style: italic; font-weight: 400; }
+  .hero .lede {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    max-width: 36ch;
+    margin: 0 0 40px;
+    text-wrap: pretty;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 24px 40px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+  .hero-meta b {
+    font-weight: 500; color: var(--ink); display: block;
+    margin-top: 4px; letter-spacing: 0;
+  }
+
+  /* ——— section primitives ——— */
+  section { padding: 140px 0; position: relative; }
+  @media (max-width: 720px) { section { padding: 96px 0; } }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: baseline;
+    margin-bottom: 72px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 720px) {
+    .section-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 48px; }
+  }
+  .section-num {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-faint);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-num .ji {
+    font-family: var(--serif); color: var(--sakura);
+    font-size: 18px; letter-spacing: 0;
+  }
+  .section-head h2 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.1; letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .section-head p.kicker {
+    font-family: var(--sans); font-weight: 300;
+    color: var(--ink-mute); font-size: 17px; line-height: 1.6;
+    margin: 16px 0 0; max-width: 50ch;
+  }
+
+  /* ——— ABOUT ——— */
+  .about-body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 720px) { .about-body { grid-template-columns: 1fr; } }
+  .about-aside {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-faint);
+    line-height: 2;
+  }
+  .about-aside .lbl { color: var(--circuit); display: block; font-size: 10px; margin-top: 18px; }
+  .about-aside .lbl:first-child { margin-top: 0; }
+  .about-aside .val { color: var(--ink); text-transform: none; letter-spacing: 0;
+    font-family: var(--sans); font-size: 14px; }
+  .about-prose p {
+    font-size: 17px; line-height: 1.8; color: var(--ink-mute);
+    margin: 0 0 22px;
+    max-width: 62ch; text-wrap: pretty;
+  }
+  .about-prose p strong { color: var(--ink); font-weight: 500; }
+  .about-prose .kanji-inline {
+    font-family: var(--serif); color: var(--sakura);
+    font-size: 1.05em;
+  }
+  blockquote.einstein {
+    margin: 56px 0 0;
+    padding: 32px 36px;
+    border-left: 1px solid var(--sakura);
+    background: linear-gradient(90deg, rgba(255,141,180,0.04), transparent 60%);
+    position: relative;
+  }
+  blockquote.einstein .quote {
+    font-family: var(--serif); font-style: italic;
+    font-size: 17px; line-height: 1.75; color: var(--ink);
+    margin: 0; text-wrap: pretty;
+  }
+  blockquote.einstein .quote::before {
+    content: "“"; font-size: 64px; line-height: 0;
+    color: var(--sakura); margin-right: 4px; vertical-align: -24px;
+    font-family: var(--serif);
+  }
+  blockquote.einstein cite {
+    display: block; margin-top: 16px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-faint); font-style: normal;
+  }
+
+  /* ——— SKILLS / Stack ——— */
+  .stack-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 900px) { .stack-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .stack-grid { grid-template-columns: 1fr; } }
+  .stack-cell {
+    background: var(--bg);
+    padding: 32px 28px;
+    position: relative;
+    transition: background .3s;
+    cursor: default;
+  }
+  .stack-cell:hover { background: var(--bg-2); }
+  .stack-cell::before {
+    /* IC chip pin marker */
+    content: ""; position: absolute; top: 14px; left: 14px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--circuit); opacity: 0.5;
+  }
+  .stack-cell .name {
+    font-family: var(--serif); font-size: 24px; font-weight: 500;
+    margin: 0 0 6px; letter-spacing: -0.01em;
+  }
+  .stack-cell .role {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-faint);
+    margin: 0 0 18px;
+  }
+  .stack-cell .bar {
+    height: 1px; background: var(--line); position: relative; overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .stack-cell .bar::after {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+    background: linear-gradient(90deg, var(--sakura), var(--circuit));
+    width: var(--lvl, 80%);
+  }
+  .stack-cell .meta {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+
+  .stack-secondary {
+    margin-top: 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 48px;
+  }
+  @media (max-width: 720px) { .stack-secondary { grid-template-columns: 1fr; } }
+  .stack-secondary .label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .stack-tags span {
+    font-family: var(--mono); font-size: 12px;
+    padding: 6px 14px; border: 1px solid var(--line);
+    border-radius: 999px; color: var(--ink-mute);
+    transition: all .2s;
+  }
+  .stack-tags span:hover { border-color: var(--sakura); color: var(--ink); }
+
+  /* ——— EXPERIENCE timeline ——— */
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+  .exp {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 36px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+    transition: background .3s;
+  }
+  .exp:last-child { border-bottom: 1px solid var(--line); }
+  .exp::before {
+    content: ""; position: absolute; left: 224px; top: 44px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--sakura);
+    transition: background .3s;
+  }
+  .exp:hover::before { background: var(--sakura); box-shadow: 0 0 12px var(--sakura); }
+  @media (max-width: 720px) {
+    .exp { grid-template-columns: 1fr; gap: 12px; }
+    .exp::before { display: none; }
+  }
+  .exp-period {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink);
+    line-height: 1.4;
+    display: inline-flex; align-items: center;
+    align-self: flex-start;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--sakura);
+    background: var(--bg-2);
+    border-radius: 2px;
+    height: fit-content;
+  }
+  .exp-period .now {
+    color: var(--circuit);
+    position: relative;
+    padding-left: 14px;
+    margin-left: 4px;
+  }
+  .exp-period .now::before {
+    content: ""; position: absolute; left: 0; top: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--circuit);
+    transform: translateY(-50%);
+    box-shadow: 0 0 8px var(--circuit);
+    animation: pulse-now 2s ease-in-out infinite;
+  }
+  @keyframes pulse-now {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .exp-body h3 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: 24px; margin: 0 0 4px; letter-spacing: -0.005em;
+  }
+  .exp-body .co {
+    font-family: var(--sans); font-size: 14px; color: var(--ink-mute);
+    margin: 0 0 16px;
+  }
+  .exp-body .co .sep { color: var(--ink-faint); margin: 0 8px; }
+  .exp-body p {
+    font-size: 16px; line-height: 1.75; color: var(--ink-mute);
+    margin: 0 0 16px; max-width: 62ch;
+  }
+  .exp-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--line);
+  }
+  .exp-tags span {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    color: var(--ink);
+    padding: 5px 12px 5px 20px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--bg-2);
+    position: relative;
+    transition: all .2s;
+  }
+  .exp-tags span::before {
+    content: ""; position: absolute;
+    left: 9px; top: 50%; transform: translateY(-50%);
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--circuit);
+    box-shadow: 0 0 6px var(--circuit);
+  }
+  .exp-tags span:hover {
+    border-color: var(--sakura); color: var(--sakura);
+  }
+  .exp-tags span:hover::before { background: var(--sakura); box-shadow: 0 0 6px var(--sakura); }
+
+  /* ——— CONTACT ——— */
+  .contact {
+    padding: 140px 0 96px;
+    border-top: 1px solid var(--line);
+    background: linear-gradient(to bottom, transparent, rgba(255,141,180,0.02));
+  }
+  .contact-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px;
+    align-items: end;
+  }
+  @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 56px; } }
+  .contact h2 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05; margin: 0 0 24px; letter-spacing: -0.015em;
+  }
+  .contact h2 .accent { color: var(--sakura); font-style: italic; font-weight: 400; }
+  .contact .lede {
+    color: var(--ink-mute); font-size: 18px; line-height: 1.7;
+    margin: 0 0 36px; max-width: 38ch; text-wrap: pretty;
+  }
+  .contact-mail {
+    font-family: var(--serif); font-size: 28px;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--line); padding-bottom: 8px;
+    transition: all .2s;
+    display: inline-block;
+  }
+  .contact-mail:hover { color: var(--sakura); border-color: var(--sakura); }
+  .contact-links {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .contact-links a {
+    display: grid; grid-template-columns: 32px 1fr auto; align-items: center;
+    gap: 16px; padding: 18px 4px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none; color: var(--ink);
+    transition: all .25s;
+    font-family: var(--sans);
+  }
+  .contact-links a:hover { padding-left: 16px; color: var(--sakura); }
+  .contact-links .idx {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--ink-faint); letter-spacing: 0.1em;
+  }
+  .contact-links .label {
+    font-family: var(--serif); font-size: 20px; font-weight: 400;
+  }
+  .contact-links .handle {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--ink-mute); letter-spacing: 0.04em;
+  }
+
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer .seal {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  footer .seal .ji {
+    font-family: var(--serif); font-size: 14px; color: var(--sakura);
+    letter-spacing: 0; text-transform: none;
+  }
+
+  /* fade-in for intersection */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+</style>
+</head>
+<body>
+
+<div class="bg-vignette"></div>
+<div class="bg-grid"></div>
+<canvas id="circuit-canvas"></canvas>
+<canvas id="sakura-canvas"></canvas>
+
+<nav class="top">
+  <div class="wrap">
+    <a href="#" class="mark">
+      <span class="kanji">改善</span>
+      <span>Rafael Raiol</span>
+      <span class="dot"></span>
+    </a>
+    <ul>
+      <li><a href="#about"><span class="num">01</span>About</a></li>
+      <li><a href="#stack"><span class="num">02</span>Stack</a></li>
+      <li><a href="#work"><span class="num">03</span>Work</a></li>
+      <li><a href="#contact"><span class="num">04</span>Contact</a></li>
+    </ul>
+    <a href="index-light.html" class="theme-toggle" style="display:none">
+      <span class="moon">☾</span> Light
+    </a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-eyebrow">改善 — Continuous improvement</div>
+        <h1>
+          Backend &amp; cloud<br>
+          engineering, practiced<br>
+          as a <span class="accent">quiet craft.</span>
+        </h1>
+        <p class="lede">
+          I'm Rafael Vilarinho Raiol — a senior software developer working
+          across backend services, DevOps, and the cloud foundations they
+          live on. Resilient systems, legible code, small daily betterments.
+        </p>
+        <div class="hero-meta">
+          <div>Role<b>Senior Software Developer · Ambev Tech</b></div>
+          <div>Focus<b>Backend · Cloud · DevOps</b></div>
+          <div>Status<b style="color: var(--circuit)">Senior Software Developer @ Ambev Tech</b></div>
+        </div>
+      </div>
+      <div style="position: relative;">
+        <div class="kaizen-watermark" aria-hidden="true">改<br>善</div>
+        <div class="kaizen-stamp" aria-hidden="true">改善</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-num"><span class="ji">一</span> 01 — About</div>
+        <div>
+          <h2>An engineering of small iterations.</h2>
+          <p class="kicker">
+            I work on systems that are meant to last — favoring clarity over
+            cleverness, small improvements over grand rewrites.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-body reveal">
+        <aside class="about-aside">
+          <span class="lbl">Based in</span>
+          <span class="val">Campinas, SP — Brazil</span>
+          <span class="lbl">Languages</span>
+          <span class="val">Português · English</span>
+          <span class="lbl">Practice</span>
+          <span class="val">Backend, DevOps, cloud architecture</span>
+          <span class="lbl">Currently</span>
+          <span class="val">Senior Software Developer · Ambev Tech</span>
+          <span class="lbl">Studying</span>
+          <span class="val">B.Sc. Information Security · UNIMAR · 2025–2027</span>
+          <span class="lbl">Years</span>
+          <span class="val">~15</span>
+        </aside>
+        <div class="about-prose">
+          <p>
+            I'm a <strong>software / DevOps engineer</strong> who supports
+            development and security teams in defining and implementing
+            scalable, secure, and stable infrastructure. The work I'm
+            proudest of tends to be invisible: things that simply continue to
+            work, year after year, without drama.
+          </p>
+          <p>
+            My mission is to enable fast and reliable delivery of high-quality
+            products while keeping infrastructure performant and available.
+            Day to day, that means designing backend systems with
+            <strong>Java, Spring Boot, and Go</strong>, shaping cloud platforms
+            on <strong>Azure</strong>, and writing the
+            <strong>Terraform, pipelines, and automations</strong> that hold
+            them together.
+          </p>
+          <p>
+            My approach is shaped by an idea I keep returning to —
+            <span class="kanji-inline">改善</span> kaizen, the practice of small,
+            continuous improvements. A system, like a garden, benefits more
+            from steady attention than from sudden ambition. I try to leave
+            every codebase a little quieter, a little more legible, than I
+            found it. I'm also passionate about learning new technologies and
+            sharing what I learn with others — mentoring is part of the craft.
+          </p>
+
+          <blockquote class="einstein">
+            <p class="quote">
+              Never regard your study as a duty, but as the enviable
+              opportunity to learn the liberating beauty of the intellect for
+              your own personal joy and for the profit of the community to
+              which your later work will belong.
+            </p>
+            <cite>— Albert Einstein</cite>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-num"><span class="ji">二</span> 02 — Stack</div>
+        <div>
+          <h2>Tools, chosen carefully and used for years.</h2>
+          <p class="kicker">
+            A short list I know well, rather than a long one I half-remember.
+          </p>
+        </div>
+      </div>
+
+      <div class="stack-grid reveal">
+        <div class="stack-cell" style="--lvl: 92%">
+          <p class="name">Java · Spring Boot</p>
+          <p class="role">Primary backend stack</p>
+          <div class="bar"></div>
+          <div class="meta"><span>ddd · microservices · bdd</span><span>current</span></div>
+        </div>
+        <div class="stack-cell" style="--lvl: 88%">
+          <p class="name">Go</p>
+          <p class="role">Services &amp; integrations</p>
+          <div class="bar"></div>
+          <div class="meta"><span>apis · workers</span><span>~3y</span></div>
+        </div>
+        <div class="stack-cell" style="--lvl: 86%">
+          <p class="name">JavaScript / Node</p>
+          <p class="role">Node, Nest, Next, React</p>
+          <div class="bar"></div>
+          <div class="meta"><span>typescript · mern</span><span>~10y</span></div>
+        </div>
+        <div class="stack-cell" style="--lvl: 95%">
+          <p class="name">Azure</p>
+          <p class="role">Primary cloud platform</p>
+          <div class="bar"></div>
+          <div class="meta"><span>aks · service bus · devops</span><span>certified</span></div>
+        </div>
+        <div class="stack-cell" style="--lvl: 90%">
+          <p class="name">Terraform · IaC</p>
+          <p class="role">Infrastructure as code</p>
+          <div class="bar"></div>
+          <div class="meta"><span>terragrunt · crossplane</span><span>~6y</span></div>
+        </div>
+        <div class="stack-cell" style="--lvl: 88%">
+          <p class="name">Kubernetes · Docker</p>
+          <p class="role">Container orchestration</p>
+          <div class="bar"></div>
+          <div class="meta"><span>aks · rancher · swarm</span><span>~7y</span></div>
+        </div>
+      </div>
+
+      <div class="stack-secondary reveal">
+        <div class="label">Adjacent &amp; comfortable</div>
+        <div class="stack-tags">
+          <span>Python</span><span>C# / .NET</span><span>PHP (Laravel)</span>
+          <span>React · Next.js</span><span>NestJS</span><span>React Native</span>
+          <span>MongoDB</span><span>MySQL</span><span>Elasticsearch</span>
+          <span>Azure Service Bus</span><span>SQS · SNS · RabbitMQ</span>
+          <span>AWS (EC2 · S3 · Lambda)</span>
+          <span>GitHub Actions</span><span>Azure DevOps</span><span>GitLab CI</span>
+          <span>Datadog</span><span>ELK Stack</span><span>CloudWatch</span>
+          <span>Shell · PowerShell</span><span>Linux · Windows Server</span>
+          <span>Nginx · Apache</span><span>DDD · BDD</span><span>Scrum · Kanban</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / EXPERIENCE -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-num"><span class="ji">三</span> 03 — Work</div>
+        <div>
+          <h2>A decade of building, tuning, and keeping the lights on.</h2>
+          <p class="kicker">
+            A selection of roles. The years are accurate; the lessons, more so.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline">
+
+        <article class="exp reveal">
+          <div class="exp-period">Jan 2026 — <span class="now">Present</span></div>
+          <div class="exp-body">
+            <h3>Senior Software Developer</h3>
+            <p class="co">Ambev Tech <span class="sep">·</span> Campinas, SP</p>
+            <p>
+              Designing, developing, and maintaining backend systems with
+              Java and Spring Boot, applying Domain-Driven Design to keep
+              services scalable and maintainable. Building REST APIs and
+              microservices on Azure with Service Bus for event-driven
+              messaging, orchestrated on AKS. Bridging technical decisions
+              with business impact and mentoring junior and mid-level
+              engineers along the way.
+            </p>
+            <div class="exp-tags">
+              <span>Java · Spring Boot</span><span>DDD · BDD</span>
+              <span>Azure · AKS · Service Bus</span><span>JavaScript</span>
+              <span>GitHub · CI/CD</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Jul 2024 — Jan 2026</div>
+          <div class="exp-body">
+            <h3>Senior Cloud Specialist</h3>
+            <p class="co">Ambev Tech <span class="sep">·</span> Campinas, SP</p>
+            <p>
+              Owned improvements to the central platform services for Cloud
+              Transformation — pipelines, automated cloud resource management,
+              and IaC. Implemented and evolved the Enterprise Scale model and
+              its Landing Zones, defined monitoring strategies for core
+              infrastructure, and ran cost/efficiency analyses with SRE.
+              Supported the development of Cloud Specialist I and Sysadmin
+              roles via PDIs.
+            </p>
+            <div class="exp-tags">
+              <span>Azure · Azure DevOps</span><span>Crossplane</span>
+              <span>Terraform · Terragrunt</span><span>Datadog</span>
+              <span>Rancher · AKS</span><span>Java · Python · Shell</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Dec 2023 — Jun 2024</div>
+          <div class="exp-body">
+            <h3>Senior DevOps Engineer</h3>
+            <p class="co">ADTsys Data Cloud <span class="sep">·</span> Cloud Efficiency / FinOps for Ambev</p>
+            <p>
+              Led automation initiatives on the Cloud Efficiency team — using
+              Terraform, Python, and Azure to remove repetitive operational
+              work, surface resource visibility, and strengthen governance.
+              Built dashboards for real-time cloud usage and cost insights
+              and integrated DevOps practices into the SDLC.
+            </p>
+            <div class="exp-tags">
+              <span>Terraform</span><span>Python</span><span>Azure</span>
+              <span>FinOps</span><span>Governance</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Aug 2021 — Dec 2023</div>
+          <div class="exp-body">
+            <h3>Senior Software Engineer / DevOps</h3>
+            <p class="co">FinanZero <span class="sep">·</span> São Paulo, SP</p>
+            <p>
+              Two roles across two and a half years. Started on Marketing,
+              shipping services in Go and Node with Next.js front-ends on
+              AWS — Route 53, EC2, SQS, ECR, CloudFront — orchestrated with
+              Docker Swarm and Terraform. Moved to Partner Integration to
+              manage the team and monitor 30+ partner integrations
+              (EmprestimoSim, Noverde, SuperSim and others), running
+              feedback cycles and pushing the DevOps culture forward.
+            </p>
+            <div class="exp-tags">
+              <span>Go</span><span>Node · Next.js · React</span>
+              <span>MongoDB</span><span>AWS · Terraform</span>
+              <span>Docker Swarm</span><span>People management</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Dec 2020 — Jul 2021</div>
+          <div class="exp-body">
+            <h3>Senior Software Engineer</h3>
+            <p class="co">Midway <span class="sep">·</span> São Paulo, SP</p>
+            <p>
+              Built microservices for data provisioning on AWS Lambda and
+              API Gateway with NestJS and TypeScript. Set up observability
+              with the ELK stack and ran ETLs through Apache Airflow, all
+              shipped via Azure DevOps pipelines.
+            </p>
+            <div class="exp-tags">
+              <span>NestJS · TypeScript</span><span>AWS Lambda · API Gateway</span>
+              <span>ELK</span><span>Airflow</span><span>Azure DevOps</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Jan 2020 — Dec 2020</div>
+          <div class="exp-body">
+            <h3>Development Analyst</h3>
+            <p class="co">Mutant <span class="sep">·</span> São Paulo</p>
+            <p>
+              Built voice digital assistants for Claro and SKY using NodeJS
+              and TypeScript with NLP-driven, event-driven flows. Also
+              shipped supporting API services in .NET.
+            </p>
+            <div class="exp-tags">
+              <span>NodeJS · TypeScript</span><span>NLP</span>
+              <span>.NET</span><span>Bitbucket CI</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Nov 2011 — Jan 2020</div>
+          <div class="exp-body">
+            <h3>Full Stack Engineer / DevOps</h3>
+            <p class="co">RAVI Tecnologia <span class="sep">·</span> São Paulo</p>
+            <p>
+              Eight years of building. Web platforms and APIs in PHP
+              (Laravel, CakePHP, Codeigniter), JavaScript (Node, React,
+              Next, Ionic, React Native) and Go. Desktop in C#, mobile in
+              Android. On the operations side: Linux/Windows Server admin,
+              Docker and Swarm, Terraform, ELK, AWS S3/CloudFront,
+              load-balancing with AWS LB and Nginx, and CI/CD across
+              GitHub Actions, GitLab Pipelines, and Bitbucket. Ran client
+              interviews, project planning, and the day-to-day Scrum/Kanban.
+            </p>
+            <div class="exp-tags">
+              <span>PHP · Laravel</span><span>JavaScript · React · Node</span>
+              <span>Go</span><span>C# · Android</span>
+              <span>Docker · Terraform</span><span>AWS · Linux</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp reveal">
+          <div class="exp-period">Sep 2009 — Jan 2015</div>
+          <div class="exp-body">
+            <h3>Developer · Junior System Administrator</h3>
+            <p class="co">Centro Presbiteriano de Pós-Graduação Andrew Jumper <span class="sep">·</span> São Paulo</p>
+            <p>
+              First steps in the craft. Wrote production software, kept
+              servers alive, learned to read incident timelines, and
+              started a notebook of mistakes — still keep it.
+            </p>
+            <div class="exp-tags">
+              <span>Web development</span><span>Linux administration</span>
+              <span>System operations</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="contact-grid reveal">
+        <div>
+          <div class="hero-eyebrow" style="margin-bottom: 24px;">改善 — Begin a conversation</div>
+          <h2>Resilient work, <span class="accent">made together.</span></h2>
+          <p class="lede">
+            If you're building something that needs to be reliable, durable,
+            and quietly excellent — I'd be glad to talk.
+          </p>
+          <a href="/cdn-cgi/l/email-protection#0775666166626b2975666e686b47606a666e6b2964686a" class="contact-mail"><span class="__cf_email__" data-cfemail="80f2e1e6e1e5ecaef2e1e9efecc0e7ede1e9ecaee3efed">[email&#160;protected]</span> →</a>
+        </div>
+        <ul class="contact-links">
+          <li><a href="https://www.linkedin.com/in/rafaelraiol/" target="_blank" rel="noopener"><span class="idx">01</span><span><span class="label">LinkedIn</span></span><span class="handle">in/rafaelraiol ↗</span></a></li>
+          <li><a href="/cdn-cgi/l/email-protection#84f6e5e2e5e1e8aaf6e5edebe8c4e3e9e5ede8aae7ebe9"><span class="idx">02</span><span><span class="label">Email</span></span><span class="handle"><span class="__cf_email__" data-cfemail="bccedddaddd9d092ceddd5d3d0fcdbd1ddd5d092dfd3d1">[email&#160;protected]</span> ↗</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Rafael Vilarinho Raiol. Built quietly.</span>
+      <span class="seal"><span class="ji">改善</span> Kaizen — small, daily.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ——— intersection reveal ——— */
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ——— Sakura petals ——— */
+(function sakura() {
+  const cvs = document.getElementById('sakura-canvas');
+  const ctx = cvs.getContext('2d');
+  let W, H, dpr;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cvs.clientWidth; H = cvs.clientHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize); resize();
+
+  const COLORS = ['rgba(255,141,180,0.85)', 'rgba(244,114,166,0.7)', 'rgba(255,182,205,0.7)'];
+  const COUNT = Math.min(40, Math.round(W / 32));
+  const petals = [];
+
+  function makePetal() {
+    return {
+      x: Math.random() * W,
+      y: -20 - Math.random() * H,
+      size: 6 + Math.random() * 10,
+      vy: 0.4 + Math.random() * 0.9,
+      vx: -0.3 + Math.random() * 0.6,
+      rot: Math.random() * Math.PI * 2,
+      vr: -0.02 + Math.random() * 0.04,
+      sway: Math.random() * Math.PI * 2,
+      swaySpeed: 0.005 + Math.random() * 0.01,
+      color: COLORS[(Math.random() * COLORS.length) | 0],
+      opacity: 0.5 + Math.random() * 0.5,
+    };
+  }
+  for (let i = 0; i < COUNT; i++) petals.push(makePetal());
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.globalAlpha = p.opacity;
+    // simple petal: two arcs forming a leaf shape
+    ctx.beginPath();
+    ctx.moveTo(0, -p.size);
+    ctx.bezierCurveTo(p.size * 0.6, -p.size * 0.6, p.size * 0.6, p.size * 0.6, 0, p.size);
+    ctx.bezierCurveTo(-p.size * 0.6, p.size * 0.6, -p.size * 0.6, -p.size * 0.6, 0, -p.size);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    // subtle vein
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(0, -p.size); ctx.lineTo(0, p.size);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of petals) {
+      p.sway += p.swaySpeed;
+      p.x += p.vx + Math.sin(p.sway) * 0.6;
+      p.y += p.vy;
+      p.rot += p.vr;
+      if (p.y > H + 30 || p.x < -30 || p.x > W + 30) {
+        Object.assign(p, makePetal(), { y: -20 });
+      }
+      drawPetal(p);
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ——— Circuit traces with traveling pulses ——— */
+(function circuits() {
+  const cvs = document.getElementById('circuit-canvas');
+  const ctx = cvs.getContext('2d');
+  let W, H, dpr, traces = [], pulses = [];
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cvs.clientWidth; H = cvs.clientHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    buildTraces();
+  }
+
+  // build a handful of orthogonal traces with axis-aligned 45° turns
+  function buildTraces() {
+    traces = [];
+    const margin = 24;
+    const STEP = 56;
+    const COUNT = 14;
+    for (let i = 0; i < COUNT; i++) {
+      const startEdge = (Math.random() < 0.5) ? 'left' : 'right';
+      const y = margin + Math.random() * (H - margin * 2);
+      let x = startEdge === 'left' ? 0 : W;
+      const dir = startEdge === 'left' ? 1 : -1;
+      const points = [{ x, y }];
+      let cy = y;
+      let cx = x;
+      const segs = 3 + Math.floor(Math.random() * 3);
+      for (let s = 0; s < segs; s++) {
+        const len = STEP * (2 + Math.floor(Math.random() * 5));
+        cx += dir * len;
+        points.push({ x: cx, y: cy });
+        // vertical jog
+        const jog = STEP * (1 + Math.floor(Math.random() * 4)) * (Math.random() < 0.5 ? -1 : 1);
+        cy = Math.max(margin, Math.min(H - margin, cy + jog));
+        points.push({ x: cx, y: cy });
+      }
+      // exit
+      cx += dir * STEP * 4;
+      points.push({ x: cx, y: cy });
+      traces.push({ points });
+    }
+    // seed pulses
+    pulses = [];
+    for (let i = 0; i < 10; i++) spawnPulse();
+  }
+
+  function spawnPulse() {
+    const t = traces[(Math.random() * traces.length) | 0];
+    if (!t) return;
+    pulses.push({
+      trace: t,
+      seg: 0,
+      progress: 0,
+      speed: 0.004 + Math.random() * 0.006,
+      hue: Math.random() < 0.7 ? 'circuit' : 'sakura',
+      life: 0,
+      maxLife: 1,
+    });
+  }
+
+  function drawTraces() {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(125,211,252,0.18)';
+    for (const t of traces) {
+      ctx.beginPath();
+      ctx.moveTo(t.points[0].x, t.points[0].y);
+      for (let i = 1; i < t.points.length; i++) {
+        ctx.lineTo(t.points[i].x, t.points[i].y);
+      }
+      ctx.stroke();
+      // node dots at vertices
+      for (let i = 1; i < t.points.length - 1; i++) {
+        const p = t.points[i];
+        ctx.fillStyle = 'rgba(125,211,252,0.35)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function pulsePosition(pulse) {
+    const pts = pulse.trace.points;
+    const segLengths = [];
+    let total = 0;
+    for (let i = 1; i < pts.length; i++) {
+      const dx = pts[i].x - pts[i - 1].x;
+      const dy = pts[i].y - pts[i - 1].y;
+      const l = Math.hypot(dx, dy);
+      segLengths.push(l); total += l;
+    }
+    const target = pulse.progress * total;
+    let acc = 0;
+    for (let i = 0; i < segLengths.length; i++) {
+      if (acc + segLengths[i] >= target) {
+        const t = (target - acc) / segLengths[i];
+        const a = pts[i], b = pts[i + 1];
+        return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+      }
+      acc += segLengths[i];
+    }
+    return pts[pts.length - 1];
+  }
+
+  function drawPulses() {
+    for (const p of pulses) {
+      const pos = pulsePosition(p);
+      const color = p.hue === 'sakura' ? '255,141,180' : '125,211,252';
+      // glow
+      const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 18);
+      grad.addColorStop(0, `rgba(${color},0.9)`);
+      grad.addColorStop(1, `rgba(${color},0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 18, 0, Math.PI * 2);
+      ctx.fill();
+      // bright core
+      ctx.fillStyle = `rgba(${color},1)`;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    drawTraces();
+    drawPulses();
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      pulses[i].progress += pulses[i].speed;
+      if (pulses[i].progress >= 1) pulses.splice(i, 1);
+    }
+    if (pulses.length < 12 && Math.random() < 0.05) spawnPulse();
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize); resize();
+  frame();
+})();
+</script>
+
+</body>
+</html>
